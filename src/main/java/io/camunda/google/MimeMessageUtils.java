@@ -191,10 +191,6 @@ public class MimeMessageUtils {
         this.encoding = encoding;
     }
 
-
-    /**
-     * Return the underlying MimeMessage object.
-     */
     public final MimeMessage getMimeMessage() {
         return this.mimeMessage;
     }
@@ -260,10 +256,6 @@ public class MimeMessageUtils {
         this.mimeMultipart = main;
     }
 
-    /**
-     * Return whether this helper is in multipart mode,
-     * i.e. whether it holds a multipart message.
-     */
     public final boolean isMultipart() {
         return (this.rootMimeMultipart != null);
     }
@@ -273,6 +265,7 @@ public class MimeMessageUtils {
      * Can be used to manually add attachments.
      * <p>This will be the direct content of the MimeMessage,
      * in case of a multipart mail.
+     * @return the root MIME "multipart/mixed" object
      * @throws IllegalStateException if this helper is not in multipart mode
      */
     public final MimeMultipart getRootMimeMultipart() throws IllegalStateException {
@@ -289,6 +282,7 @@ public class MimeMessageUtils {
      * Can be used to manually add body parts, inline elements, etc.
      * <p>This will be nested within the root MimeMultipart,
      * in case of a multipart mail.
+     * @return the root MIME "multipart/related" object
      * @throws IllegalStateException if this helper is not in multipart mode
      */
     public final MimeMultipart getMimeMultipart() throws IllegalStateException {
@@ -300,10 +294,6 @@ public class MimeMessageUtils {
         return this.mimeMultipart;
     }
 
-    /**
-     * Return the specific character encoding used for this message, if any.
-     */
-    @Nullable
     public String getEncoding() {
         return this.encoding;
     }
@@ -316,6 +306,7 @@ public class MimeMessageUtils {
      * check out JavaMail's {@code mail.mime.encodefilename} system property.
      * <p><b>NOTE:</b> The default changed to {@code false} in 5.3, in favor of
      * JavaMail's standard {@code mail.mime.encodefilename} system property.
+     * @param encodeFilenames whether to encode attachment filenames
      */
     public void setEncodeFilenames(boolean encodeFilenames) {
         this.encodeFilenames = encodeFilenames;
@@ -471,7 +462,6 @@ public class MimeMessageUtils {
      * Set the given text directly as content in non-multipart mode
      * or as default body part in multipart mode.
      * Always applies the default content type "text/plain".
-     * <p><b>NOTE:</b> Invoke {@link #addInline} <i>after</i> {@code setText};
      * else, mail readers might not be able to resolve inline references correctly.
      * @param text the text for the message
      * @throws MessagingException in case of errors
@@ -484,8 +474,7 @@ public class MimeMessageUtils {
      * Set the given text directly as content in non-multipart mode
      * or as default body part in multipart mode.
      * The "html" flag determines the content type to apply.
-     * <p><b>NOTE:</b> Invoke {@link #addInline} <i>after</i> {@code setText};
-     * else, mail readers might not be able to resolve inline references correctly.
+      else, mail readers might not be able to resolve inline references correctly.
      * @param text the text for the message
      * @param html whether to apply content type "text/html" for an
      * HTML mail, using default content type ("text/plain") else
@@ -510,7 +499,6 @@ public class MimeMessageUtils {
     /**
      * Set the given plain text and HTML text as alternatives, offering
      * both options to the email client. Requires multipart mode.
-     * <p><b>NOTE:</b> Invoke {@link #addInline} <i>after</i> {@code setText};
      * else, mail readers might not be able to resolve inline references correctly.
      * @param plainText the plain text for the message
      * @param htmlText the HTML text for the message
