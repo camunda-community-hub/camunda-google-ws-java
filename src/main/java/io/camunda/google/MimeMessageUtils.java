@@ -67,7 +67,6 @@ public class MimeMessageUtils {
      */
     public static final int MULTIPART_MODE_MIXED_RELATED = 3;
 
-
     private static final String MULTIPART_SUBTYPE_MIXED = "mixed";
 
     private static final String MULTIPART_SUBTYPE_RELATED = "related";
@@ -101,9 +100,6 @@ public class MimeMessageUtils {
      * the passed-in MimeMessage object, if carried there. Else,
      * JavaMail's default encoding will be used.
      * @param mimeMessage the mime message to work on
-     * @see #MimeMessageUtils(jakarta.mail.internet.MimeMessage, boolean)
-     * @see #getDefaultEncoding(jakarta.mail.internet.MimeMessage)
-     * @see JavaMailSenderImpl#setDefaultEncoding
      */
     public MimeMessageUtils(MimeMessage mimeMessage) {
         this(mimeMessage, null);
@@ -115,7 +111,6 @@ public class MimeMessageUtils {
      * i.e. no alternative texts and no inline elements or attachments).
      * @param mimeMessage the mime message to work on
      * @param encoding the character encoding to use for the message
-     * @see #MimeMessageUtils(jakarta.mail.internet.MimeMessage, boolean)
      */
     public MimeMessageUtils(MimeMessage mimeMessage, String encoding) {
         this.mimeMessage = mimeMessage;
@@ -137,9 +132,6 @@ public class MimeMessageUtils {
      * supports alternative texts, inline elements and attachments
      * (corresponds to MULTIPART_MODE_MIXED_RELATED)
      * @throws MessagingException if multipart creation failed
-     * @see #MimeMessageUtils(jakarta.mail.internet.MimeMessage, int)
-     * @see #getDefaultEncoding(jakarta.mail.internet.MimeMessage)
-     * @see JavaMailSenderImpl#setDefaultEncoding
      */
     public MimeMessageUtils(MimeMessage mimeMessage, boolean multipart) throws MessagingException {
         this(mimeMessage, multipart, null);
@@ -158,7 +150,6 @@ public class MimeMessageUtils {
      * (corresponds to MULTIPART_MODE_MIXED_RELATED)
      * @param encoding the character encoding to use for the message
      * @throws MessagingException if multipart creation failed
-     * @see #MimeMessageUtils(jakarta.mail.internet.MimeMessage, int, String)
      */
     public MimeMessageUtils(MimeMessage mimeMessage, boolean multipart, String encoding)
             throws MessagingException {
@@ -177,12 +168,6 @@ public class MimeMessageUtils {
      * @param multipartMode which kind of multipart message to create
      * (MIXED, RELATED, MIXED_RELATED, or NO)
      * @throws MessagingException if multipart creation failed
-     * @see #MULTIPART_MODE_NO
-     * @see #MULTIPART_MODE_MIXED
-     * @see #MULTIPART_MODE_RELATED
-     * @see #MULTIPART_MODE_MIXED_RELATED
-     * @see #getDefaultEncoding(jakarta.mail.internet.MimeMessage)
-     * @see JavaMailSenderImpl#setDefaultEncoding
      */
     public MimeMessageUtils(MimeMessage mimeMessage, int multipartMode) throws MessagingException {
         this(mimeMessage, multipartMode, null);
@@ -197,10 +182,6 @@ public class MimeMessageUtils {
      * (MIXED, RELATED, MIXED_RELATED, or NO)
      * @param encoding the character encoding to use for the message
      * @throws MessagingException if multipart creation failed
-     * @see #MULTIPART_MODE_NO
-     * @see #MULTIPART_MODE_MIXED
-     * @see #MULTIPART_MODE_RELATED
-     * @see #MULTIPART_MODE_MIXED_RELATED
      */
     public MimeMessageUtils(MimeMessage mimeMessage, int multipartMode, String encoding)
             throws MessagingException {
@@ -236,11 +217,6 @@ public class MimeMessageUtils {
      * @param multipartMode the multipart mode, as passed into the constructor
      * (MIXED, RELATED, MIXED_RELATED, or NO)
      * @throws MessagingException if multipart creation failed
-     * @see #setMimeMultiparts
-     * @see #MULTIPART_MODE_NO
-     * @see #MULTIPART_MODE_MIXED
-     * @see #MULTIPART_MODE_RELATED
-     * @see #MULTIPART_MODE_MIXED_RELATED
      */
     protected void createMimeMultiparts(MimeMessage mimeMessage, int multipartMode) throws MessagingException {
         switch (multipartMode) {
@@ -287,7 +263,6 @@ public class MimeMessageUtils {
     /**
      * Return whether this helper is in multipart mode,
      * i.e. whether it holds a multipart message.
-     * @see #MimeMessageUtils(MimeMessage, boolean)
      */
     public final boolean isMultipart() {
         return (this.rootMimeMultipart != null);
@@ -299,9 +274,6 @@ public class MimeMessageUtils {
      * <p>This will be the direct content of the MimeMessage,
      * in case of a multipart mail.
      * @throws IllegalStateException if this helper is not in multipart mode
-     * @see #isMultipart
-     * @see #getMimeMessage
-     * @see jakarta.mail.internet.MimeMultipart#addBodyPart
      */
     public final MimeMultipart getRootMimeMultipart() throws IllegalStateException {
         if (this.rootMimeMultipart == null) {
@@ -318,9 +290,6 @@ public class MimeMessageUtils {
      * <p>This will be nested within the root MimeMultipart,
      * in case of a multipart mail.
      * @throws IllegalStateException if this helper is not in multipart mode
-     * @see #isMultipart
-     * @see #getRootMimeMultipart
-     * @see jakarta.mail.internet.MimeMultipart#addBodyPart
      */
     public final MimeMultipart getMimeMultipart() throws IllegalStateException {
         if (this.mimeMultipart == null) {
@@ -347,9 +316,6 @@ public class MimeMessageUtils {
      * check out JavaMail's {@code mail.mime.encodefilename} system property.
      * <p><b>NOTE:</b> The default changed to {@code false} in 5.3, in favor of
      * JavaMail's standard {@code mail.mime.encodefilename} system property.
-     * @since 5.2.9
-     * @see #addAttachment(String, DataSource)
-     * @see MimeBodyPart#setFileName(String)
      */
     public void setEncodeFilenames(boolean encodeFilenames) {
         this.encodeFilenames = encodeFilenames;
@@ -358,8 +324,6 @@ public class MimeMessageUtils {
     /**
      * Return whether to encode attachment filenames passed to this helper's
      * {@code #addAttachment} methods.
-     * @since 5.2.9
-     * @see #setEncodeFilenames
      */
     public boolean isEncodeFilenames() {
         return this.encodeFilenames;
@@ -614,8 +578,6 @@ public class MimeMessageUtils {
      * @param dataSource the {@code jakarta.activation.DataSource} to take
      * the content from, determining the InputStream and the content type
      * @throws MessagingException in case of errors
-     * @see #addAttachment(String, org.springframework.core.io.InputStreamSource)
-     * @see #addAttachment(String, java.io.File)
      */
     public void addAttachment(String attachmentFilename, DataSource dataSource) throws MessagingException {
         try {
@@ -641,8 +603,6 @@ public class MimeMessageUtils {
      * appear in the mail
      * @param file the File resource to take the content from
      * @throws MessagingException in case of errors
-     * @see #addAttachment(String, org.springframework.core.io.InputStreamSource)
-     * @see #addAttachment(String, jakarta.activation.DataSource)
      */
     public void addAttachment(String attachmentFilename, File file) throws MessagingException {
         FileDataSource dataSource = new FileDataSource(file);

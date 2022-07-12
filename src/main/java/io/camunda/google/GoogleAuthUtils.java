@@ -40,7 +40,6 @@ public class GoogleAuthUtils {
      * @param HTTP_TRANSPORT The network HTTP Transport.
      * @return An authorized Credential object.
      * @throws IOException If the credentials.json file cannot be found.
-     * @throws GeneralSecurityException 
      */
     public static Credential getCredentials(NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.
