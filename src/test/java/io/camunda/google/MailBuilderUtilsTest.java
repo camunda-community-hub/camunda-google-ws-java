@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -22,6 +24,12 @@ public class MailBuilderUtilsTest {
     public void buildMailBody() {
         String body = MailBuilderUtils.buildMailBody("testMail", Map.of("username", "blop"), Locale.ENGLISH);
         Assertions.assertTrue(body.contains("<span>blop</span>"), body);
+        Pattern datePatten = Pattern.compile("Date <span>[0-9]{2}/[0-9]{2}/[0-9]{4}");
+        Matcher matcherDate = datePatten.matcher(body);
+        Assertions.assertTrue(matcherDate.find(), body);
+        Pattern dateTimePatten = Pattern.compile("Date time <span>[0-9]{2}/[0-9]{2}/[0-9]{4} - [0-9]{2}:[0-9]{2}:[0-9]{2}");
+        Matcher matcherDateTime = dateTimePatten.matcher(body);
+        Assertions.assertTrue(matcherDateTime.find(), body);
     }
     
     @Test

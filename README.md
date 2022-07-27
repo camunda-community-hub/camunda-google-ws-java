@@ -46,7 +46,9 @@ The MailBuilderUtils.buildMailBody is using Thymeleaf. It expects to find a mail
 </html>
 ```
 
-This can be changed by modifying the ThymeleafConfig encoding, prefix, etc.
+The templates expressions are evaluated with FEEL so you can use expressions like ${now()+duration("P3M")}
+
+This can be changed by modifying the ThymeleafConfig encoding, prefix, expression language, date formatting patterns, etc.
 
 # use it in your project
 You can import it to your maven or gradle project as a dependency
@@ -55,7 +57,7 @@ You can import it to your maven or gradle project as a dependency
 <dependency>
 	<groupId>io.camunda</groupId>
 	<artifactId>camunda-google-ws-java</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 </dependency>
 ```
 

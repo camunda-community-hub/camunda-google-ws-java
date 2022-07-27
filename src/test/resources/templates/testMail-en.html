@@ -4,7 +4,9 @@
 </head>
 <body>
 	<div class="header"/>
-	<h4>Hi <span th:text="${username}"></span></h4>
+	<h4>Hi <span th:text='${username}'></span></h4>
 	<p>Please enjoy the content of this message.<p/>
+	<p>Date <span th:text='${today()+duration("P10D")}'></span><p/>
+	<p>Date time <span th:text='${now()+duration("P3M")}'></span><p/>
 </body>
 </html>

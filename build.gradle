@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'io.camunda'
-version = '1.0.3'
+version = '1.1.0'
 sourceCompatibility = '11'
 
 repositories {
@@ -22,7 +22,8 @@ dependencies {
   api "com.google.apis:google-api-services-sheets:v4-rev20220411-1.32.1"
   api "com.google.apis:google-api-services-drive:v3-rev20220417-1.32.1"
   api "com.google.apis:google-api-services-gmail:v1-rev110-1.25.0"
-
+  api "org.camunda.feel:feel-engine:1.15.1"
+  
   testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 

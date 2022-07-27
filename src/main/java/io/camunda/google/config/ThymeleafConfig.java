@@ -8,6 +8,10 @@ public class ThymeleafConfig {
     private String encoding = "UTF-8";
     private String prefix = "/templates/";
     private String suffix = ".html";
+    private String datePattern = "dd/MM/yyyy";
+    private String dateTimePattern = "dd/MM/yyyy - HH:mm:ss";
+    private boolean userFeelExpressions = true;
+    
     public TemplateMode getMode() {
         return mode;
     }
@@ -31,5 +35,23 @@ public class ThymeleafConfig {
     }
     public void setSuffix(String suffix) {
         this.suffix = suffix;
+    }
+    public String getDatePattern() {
+        return datePattern;
+    }
+    public void setDatePattern(String datePattern) {
+        this.datePattern = datePattern;
+    }
+    public String getDateTimePattern() {
+        return dateTimePattern;
+    }
+    public void setDateTimePattern(String dateTimePattern) {
+        this.dateTimePattern = dateTimePattern;
+    }
+    public boolean isUserFeelExpressions() {
+        return userFeelExpressions;
+    }
+    public void setUserFeelExpressions(boolean userFeelExpressions) {
+        this.userFeelExpressions = userFeelExpressions;
     }
 }

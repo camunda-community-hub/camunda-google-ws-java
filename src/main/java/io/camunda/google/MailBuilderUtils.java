@@ -12,9 +12,12 @@ import javax.mail.internet.MimeMessage;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.dialect.IDialect;
+import org.thymeleaf.standard.StandardDialect;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import io.camunda.google.config.ThymeleafConfig;
+import io.camunda.google.feel.FeelExpressionEvaluator;
 import io.camunda.google.model.Mail;
 
 
@@ -36,6 +39,13 @@ public class MailBuilderUtils {
         
         templateEngine = new TemplateEngine();
         templateEngine.setTemplateResolver(resolver);
+        if (config.isUserFeelExpressions()) {
+            for(IDialect dialect : templateEngine.getDialects()) {
+                if (dialect instanceof StandardDialect) {
+                    ((StandardDialect)dialect).setVariableExpressionEvaluator(new FeelExpressionEvaluator(config));
+                }
+            }
+        }
     }
     
     public static TemplateEngine getTemplateEngine() {
