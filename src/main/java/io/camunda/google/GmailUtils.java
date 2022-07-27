@@ -15,6 +15,7 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Message;
 
 import io.camunda.google.model.Mail;
+import io.camunda.google.thymeleaf.MailBuilderUtils;
 
 public class GmailUtils {
     

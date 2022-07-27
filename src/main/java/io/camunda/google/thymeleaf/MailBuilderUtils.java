@@ -1,4 +1,4 @@
-package io.camunda.google;
+package io.camunda.google.thymeleaf;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +16,7 @@ import org.thymeleaf.dialect.IDialect;
 import org.thymeleaf.standard.StandardDialect;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
+import io.camunda.google.MimeMessageUtils;
 import io.camunda.google.config.ThymeleafConfig;
 import io.camunda.google.feel.FeelExpressionEvaluator;
 import io.camunda.google.model.Mail;
@@ -31,14 +32,19 @@ public class MailBuilderUtils {
     }
     
     public static void configure(ThymeleafConfig config) {
-        ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
-        resolver.setTemplateMode(config.getMode());
-        resolver.setCharacterEncoding(config.getEncoding());
-        resolver.setPrefix(config.getPrefix());
-        resolver.setSuffix(config.getSuffix());
-        
         templateEngine = new TemplateEngine();
-        templateEngine.setTemplateResolver(resolver);
+        if (config.getCustomTemplateResolver()==null) {
+            ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
+            resolver.setTemplateMode(config.getMode());
+            resolver.setCharacterEncoding(config.getEncoding());
+            resolver.setPrefix(config.getPrefix());
+            resolver.setSuffix(config.getSuffix());
+            
+            templateEngine.setTemplateResolver(resolver);
+        } else {
+            ThymeleafCustomResourceResolver resolver = new ThymeleafCustomResourceResolver(config.getCustomTemplateResolver());
+            templateEngine.setTemplateResolver(resolver);
+        }
         if (config.isUserFeelExpressions()) {
             for(IDialect dialect : templateEngine.getDialects()) {
                 if (dialect instanceof StandardDialect) {

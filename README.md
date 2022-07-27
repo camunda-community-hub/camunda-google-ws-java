@@ -50,6 +50,25 @@ The templates expressions are evaluated with FEEL so you can use expressions lik
 
 This can be changed by modifying the ThymeleafConfig encoding, prefix, expression language, date formatting patterns, etc.
 
+# Retrieve templates from another location
+The default way is to retrieve templates from the classLoader. You can override it by defining your own resolver :
+
+```java
+ThymeleafConfig config = new ThymeleafConfig();
+config.setCustomTemplateResolver(new ITemplateResolver() {
+  @Override
+  public String getTemplateContent(String templateName) {
+    return "Test <span th:text='${username}'></span></h4>";
+  }
+});
+MailBuilderUtils.configure(config);
+
+String body = MailBuilderUtils.buildMailBody("testMail", Map.of("username", "blop"), Locale.ENGLISH);
+```
+
+You could use this mechanism to load templates from a database or from a file system.
+
+
 # use it in your project
 You can import it to your maven or gradle project as a dependency
 
@@ -57,7 +76,7 @@ You can import it to your maven or gradle project as a dependency
 <dependency>
 	<groupId>io.camunda</groupId>
 	<artifactId>camunda-google-ws-java</artifactId>
-	<version>1.1.0</version>
+	<version>1.2.0</version>
 </dependency>
 ```
 

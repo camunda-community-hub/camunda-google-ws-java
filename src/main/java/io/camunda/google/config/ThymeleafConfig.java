@@ -2,6 +2,8 @@ package io.camunda.google.config;
 
 import org.thymeleaf.templatemode.TemplateMode;
 
+import io.camunda.google.thymeleaf.ITemplateResolver;
+
 public class ThymeleafConfig {
 
     private TemplateMode mode = TemplateMode.HTML;
@@ -11,6 +13,7 @@ public class ThymeleafConfig {
     private String datePattern = "dd/MM/yyyy";
     private String dateTimePattern = "dd/MM/yyyy - HH:mm:ss";
     private boolean userFeelExpressions = true;
+    private ITemplateResolver customTemplateResolver = null;
     
     public TemplateMode getMode() {
         return mode;
@@ -53,5 +56,11 @@ public class ThymeleafConfig {
     }
     public void setUserFeelExpressions(boolean userFeelExpressions) {
         this.userFeelExpressions = userFeelExpressions;
+    }
+    public ITemplateResolver getCustomTemplateResolver() {
+        return customTemplateResolver;
+    }
+    public void setCustomTemplateResolver(ITemplateResolver customTemplateResolver) {
+        this.customTemplateResolver = customTemplateResolver;
     }
 }
