@@ -4,8 +4,6 @@ import java.io.File;
 
 public class Mail {
     
-    private String from;
-    
     private String[] to;
     
     private String[] cc;
@@ -17,14 +15,6 @@ public class Mail {
     private String body;
     
     private File[] attachments;
-
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
 
     public String[] getTo() {
         return to;
@@ -76,7 +66,6 @@ public class Mail {
     
     public static class Builder {
         
-        private String from;
         private String[] to;
         private String[] cc;
         private String[] bcc;
@@ -84,23 +73,18 @@ public class Mail {
         private String body;
         private File[] attachments;
 
-        public Builder from(String from) {
-            this.from = from;
-            return this;
-        }
-
         public Builder to(String... to) {
-            this.to = to;
+            this.to = simplify(to);
             return this;
         }
 
         public Builder cc(String... cc) {
-            this.cc = cc;
+            this.cc = simplify(cc);
             return this;
         }
 
         public Builder bcc(String... bcc) {
-            this.bcc = bcc;
+            this.bcc = simplify(bcc);
             return this;
         }
 
@@ -121,7 +105,6 @@ public class Mail {
         
         public Mail build() {
             Mail mail = new Mail();
-            mail.from = from;
             mail.to = to;
             mail.cc = cc;
             mail.bcc = bcc;
@@ -132,5 +115,11 @@ public class Mail {
             return mail;
         }
         
+        private String[] simplify(String... array) {
+            if (array.length==1 && array[0]==null) {
+                return null;
+            }
+            return array;
+        }
     }
 }

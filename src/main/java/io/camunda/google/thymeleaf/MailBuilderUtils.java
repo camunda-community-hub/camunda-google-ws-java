@@ -78,7 +78,7 @@ public class MailBuilderUtils {
         } else {
             messageHelper = new MimeMessageUtils(email, false);
         }
-        messageHelper.setFrom(mail.getFrom());
+        messageHelper.setFrom("me");
         messageHelper.setTo(mail.getTo());
         if (mail.getBcc()!=null && mail.getBcc().length>0) {
             messageHelper.setBcc(mail.getBcc());

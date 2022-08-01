@@ -37,13 +37,11 @@ public class MailBuilderUtilsTest {
     
     @Test
     public void buildMimeMessageWithoutAttachment() throws MessagingException, IOException {
-        Mail mail = new Mail.Builder().from("toto@toto.com").to("tata@tata.com").subject("sub").body("body").build();
+        Mail mail = new Mail.Builder().to("tata@tata.com").subject("sub").body("body").build();
         MimeMessage mimeMessage = MailBuilderUtils.buildMimeMessage(mail);
-        String contentType = mimeMessage.getContentType();
-
+        
         Assertions.assertFalse(mimeMessage.getContent() instanceof Multipart, "should not be multipart");
 
-        Assertions.assertTrue(mimeMessage.getFrom()[0].toString().equals("toto@toto.com"), "sender is toto");
         Assertions.assertTrue(mimeMessage.getAllRecipients()[0].toString().equals("tata@tata.com"), "receiver is tata");
         Assertions.assertTrue(mimeMessage.getSubject().equals("sub"), "subject is sub");
         Assertions.assertTrue(mimeMessage.getContent().equals("body"), "Body is body");
@@ -51,10 +49,9 @@ public class MailBuilderUtilsTest {
     
     @Test
     public void buildMimeMessageWithAttachment() throws MessagingException, IOException {
-        Mail mail = new Mail.Builder().from("toto@toto.com").to("tata@tata.com").subject("sub").body("body").attachments(new File("test.txt")).build();
+        Mail mail = new Mail.Builder().to("tata@tata.com").subject("sub").body("body").attachments(new File("test.txt")).build();
         MimeMessage mimeMessage = MailBuilderUtils.buildMimeMessage(mail);
 
-        Assertions.assertTrue(mimeMessage.getFrom()[0].toString().equals("toto@toto.com"), "sender is toto");
         Assertions.assertTrue(mimeMessage.getAllRecipients()[0].toString().equals("tata@tata.com"), "receiver is tata");
         Assertions.assertTrue(mimeMessage.getSubject().equals("sub"), "subject is sub");
 
