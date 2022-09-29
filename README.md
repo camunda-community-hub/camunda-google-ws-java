@@ -34,7 +34,7 @@ String htmlBody = MailBuilderUtils.buildMailBody("mailTemplate", Map.of("key", "
 GmailUtils.sendEmail(mail); 
 ```
 
-The MailBuilderUtils.buildMailBody is using Thymeleaf. It expects to find a mailTemplate-en.html file resources/templates. 
+The MailBuilderUtils.buildMailBody is using (thymeleaf-feel)[https://github.com/camunda-community-hub/thymeleaf-feel]. It expects to find a mailTemplate-en.html file resources/templates. 
 
 ```html
 <!DOCTYPE html>
@@ -76,9 +76,9 @@ You can import it to your maven or gradle project as a dependency
 <dependency>
 	<groupId>io.camunda</groupId>
 	<artifactId>camunda-google-ws-java</artifactId>
-	<version>1.2.1</version>
+	<version>1.3.0</version>
 </dependency>
 ```
 
 # Note
-This is still a draft and PRs are welcome.
+Issues and PRs are welcome.

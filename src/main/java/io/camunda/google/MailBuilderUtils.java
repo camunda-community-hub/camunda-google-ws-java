@@ -1,4 +1,4 @@
-package io.camunda.google.thymeleaf;
+package io.camunda.google;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,14 +12,10 @@ import javax.mail.internet.MimeMessage;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.dialect.IDialect;
-import org.thymeleaf.standard.StandardDialect;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import io.camunda.google.MimeMessageUtils;
-import io.camunda.google.config.ThymeleafConfig;
-import io.camunda.google.feel.FeelExpressionEvaluator;
 import io.camunda.google.model.Mail;
+import io.camunda.thymeleaf.feel.TemplateEngineFactory;
+import io.camunda.thymeleaf.feel.config.ThymeleafConfig;
 
 
 public class MailBuilderUtils {
@@ -27,31 +23,11 @@ public class MailBuilderUtils {
     private static TemplateEngine templateEngine;
     
     public static void configure() {
-        ThymeleafConfig config = new ThymeleafConfig();
-        configure(config);
+        templateEngine = TemplateEngineFactory.getTemplateEngine("MailBuilder");
     }
     
     public static void configure(ThymeleafConfig config) {
-        templateEngine = new TemplateEngine();
-        if (config.getCustomTemplateResolver()==null) {
-            ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
-            resolver.setTemplateMode(config.getMode());
-            resolver.setCharacterEncoding(config.getEncoding());
-            resolver.setPrefix(config.getPrefix());
-            resolver.setSuffix(config.getSuffix());
-            
-            templateEngine.setTemplateResolver(resolver);
-        } else {
-            ThymeleafCustomResourceResolver resolver = new ThymeleafCustomResourceResolver(config.getCustomTemplateResolver());
-            templateEngine.setTemplateResolver(resolver);
-        }
-        if (config.isUserFeelExpressions()) {
-            for(IDialect dialect : templateEngine.getDialects()) {
-                if (dialect instanceof StandardDialect) {
-                    ((StandardDialect)dialect).setVariableExpressionEvaluator(new FeelExpressionEvaluator(config));
-                }
-            }
-        }
+        templateEngine = TemplateEngineFactory.getTemplateEngine("MailBuilder", config);
     }
     
     public static TemplateEngine getTemplateEngine() {

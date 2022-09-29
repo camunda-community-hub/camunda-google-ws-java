@@ -16,10 +16,7 @@ import javax.mail.internet.MimeMessage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import io.camunda.google.config.ThymeleafConfig;
 import io.camunda.google.model.Mail;
-import io.camunda.google.thymeleaf.ITemplateResolver;
-import io.camunda.google.thymeleaf.MailBuilderUtils;
 
 public class MailBuilderUtilsTest {
 
@@ -71,18 +68,4 @@ public class MailBuilderUtilsTest {
         }
     }
     
-    @Test
-    public void customResolver() {
-        ThymeleafConfig config = new ThymeleafConfig();
-        config.setCustomTemplateResolver(new ITemplateResolver() {
-            
-            @Override
-            public String getTemplateContent(String templateName) {
-                return "Test <span th:text='${username}'></span></h4>";
-            }
-        });
-        MailBuilderUtils.configure(config);
-        String body = MailBuilderUtils.buildMailBody("testMail", Map.of("username", "blop"), Locale.ENGLISH);
-        Assertions.assertTrue(body.contains("Test <span>blop</span>"), body);
-    }
 }
