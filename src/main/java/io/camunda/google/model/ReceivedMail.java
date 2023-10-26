@@ -1,8 +1,9 @@
 package io.camunda.google.model;
 
 import java.io.File;
+import java.util.List;
 
-public class Mail {
+public class ReceivedMail {
 	private String From;
 
 	private String[] to;
@@ -15,7 +16,7 @@ public class Mail {
 
 	private String body;
 
-	private File[] attachments;
+	private List<Attachment> attachments;
 
 	public String getFrom() {
 		return From;
@@ -65,11 +66,11 @@ public class Mail {
 		this.body = body;
 	}
 
-	public File[] getAttachments() {
+	public List<Attachment> getAttachments() {
 		return attachments;
 	}
 
-	public void setAttachments(File[] attachments) {
+	public void setAttachments(List<Attachment> attachments) {
 		this.attachments = attachments;
 	}
 
@@ -80,7 +81,7 @@ public class Mail {
 		private String[] bcc;
 		private String subject;
 		private String body;
-		private File[] attachments;
+		private List<Attachment> attachments;
 
 		public Builder to(String... to) {
 			this.to = simplify(to);
@@ -107,13 +108,13 @@ public class Mail {
 			return this;
 		}
 
-		public Builder attachments(File... attachments) {
+		public Builder attachments(List<Attachment> attachments) {
 			this.attachments = attachments;
 			return this;
 		}
 
-		public Mail build() {
-			Mail mail = new Mail();
+		public ReceivedMail build() {
+			ReceivedMail mail = new ReceivedMail();
 			mail.to = to;
 			mail.cc = cc;
 			mail.bcc = bcc;

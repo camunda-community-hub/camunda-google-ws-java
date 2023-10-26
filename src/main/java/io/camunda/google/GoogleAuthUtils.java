@@ -18,46 +18,48 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import io.camunda.google.config.GoogleWsConfig;
 
 public class GoogleAuthUtils {
-    
-    private static GoogleWsConfig googleWsConfig;
-    
-    public static void configure(GoogleWsConfig googleWsConfig) {
-        GoogleAuthUtils.googleWsConfig = googleWsConfig;
-    }
-    
-    public static GoogleWsConfig getGoogleWsConfig() {
-        if (googleWsConfig==null) {
-            googleWsConfig = new GoogleWsConfig();
-        }
-        return googleWsConfig;
-    }
-    
-    public static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    
-    /**
-     * Creates an authorized Credential object.
-     * @param HTTP_TRANSPORT The network HTTP Transport.
-     * @return An authorized Credential object.
-     * @throws IOException If the credentials.json file cannot be found.
-     */
-    public static Credential getCredentials(NetHttpTransport HTTP_TRANSPORT) throws IOException {
-        // Load client secrets.
-        InputStream in = DriveUtils.class.getResourceAsStream(getGoogleWsConfig().getCredentialsFilePath());
-        if (in == null) {
-            throw new FileNotFoundException("Resource not found: " + getGoogleWsConfig().getCredentialsFilePath());
-        }
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
-        // Build flow and trigger user authorization request.
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, getGoogleWsConfig().getScopes())
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(getGoogleWsConfig().getTokensDirectoryPath())))
-                .setAccessType("offline")
-                .build();
-        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(getGoogleWsConfig().getCallBackPort()).build();
-        Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
-        //returns an authorized Credential object.
-        return credential;
-    }
-    
+	private static GoogleWsConfig googleWsConfig;
+
+	public static void configure(GoogleWsConfig googleWsConfig) {
+		GoogleAuthUtils.googleWsConfig = googleWsConfig;
+	}
+
+	public static GoogleWsConfig getGoogleWsConfig() {
+		if (googleWsConfig == null) {
+			googleWsConfig = new GoogleWsConfig();
+		}
+		return googleWsConfig;
+	}
+
+	public static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
+
+	/**
+	 * Creates an authorized Credential object.
+	 * 
+	 * @param HTTP_TRANSPORT The network HTTP Transport.
+	 * @return An authorized Credential object.
+	 * @throws IOException If the credentials.json file cannot be found.
+	 */
+	public static Credential getCredentials(NetHttpTransport HTTP_TRANSPORT) throws IOException {
+		// Load client secrets.
+		InputStream in = DriveUtils.class.getResourceAsStream(getGoogleWsConfig().getCredentialsFilePath());
+		if (in == null) {
+			throw new FileNotFoundException("Resource not found: " + getGoogleWsConfig().getCredentialsFilePath());
+		}
+		GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+
+		// Build flow and trigger user authorization request.
+		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,
+		        clientSecrets, getGoogleWsConfig().getScopes())
+		        .setDataStoreFactory(
+		                new FileDataStoreFactory(new java.io.File(getGoogleWsConfig().getTokensDirectoryPath())))
+		        .setAccessType("offline").build();
+		LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(getGoogleWsConfig().getCallBackPort())
+		        .build();
+		Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+		// returns an authorized Credential object.
+		return credential;
+	}
+
 }

@@ -6,54 +6,54 @@ import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.gmail.GmailScopes;
 
 public class GoogleWsConfig {
-    
-    private String applicationName="Camunda Project";
 
-    private int callBackPort=8888;
-    
-    private Set<String> scopes=Set.of(DriveScopes.DRIVE_FILE, GmailScopes.GMAIL_COMPOSE);
-    
-    private String tokensDirectoryPath = "tokens";
+	private String applicationName = "Camunda Project";
 
-    private String credentialsFilePath = "/client_secret_google_api.json";
+	private int callBackPort = 8888;
 
-    public String getApplicationName() {
-        return applicationName;
-    }
+	private Set<String> scopes = Set.of(DriveScopes.DRIVE_FILE, "https://mail.google.com/");
 
-    public void setApplicationName(String applicationName) {
-        this.applicationName = applicationName;
-    }
+	private String tokensDirectoryPath = "tokens";
 
-    public int getCallBackPort() {
-        return callBackPort;
-    }
+	private String credentialsFilePath = "/client_secret_google_api.json";
 
-    public void setCallBackPort(int callBackPort) {
-        this.callBackPort = callBackPort;
-    }
+	public String getApplicationName() {
+		return applicationName;
+	}
 
-    public Set<String> getScopes() {
-        return scopes;
-    }
+	public void setApplicationName(String applicationName) {
+		this.applicationName = applicationName;
+	}
 
-    public void setScopes(Set<String> scopes) {
-        this.scopes = scopes;
-    }
+	public int getCallBackPort() {
+		return callBackPort;
+	}
 
-    public String getTokensDirectoryPath() {
-        return tokensDirectoryPath;
-    }
+	public void setCallBackPort(int callBackPort) {
+		this.callBackPort = callBackPort;
+	}
 
-    public void setTokensDirectoryPath(String tokensDirectoryPath) {
-        this.tokensDirectoryPath = tokensDirectoryPath;
-    }
+	public Set<String> getScopes() {
+		return scopes;
+	}
 
-    public String getCredentialsFilePath() {
-        return credentialsFilePath;
-    }
+	public void setScopes(Set<String> scopes) {
+		this.scopes = scopes;
+	}
 
-    public void setCredentialsFilePath(String credentialsFilePath) {
-        this.credentialsFilePath = credentialsFilePath;
-    }
+	public String getTokensDirectoryPath() {
+		return tokensDirectoryPath;
+	}
+
+	public void setTokensDirectoryPath(String tokensDirectoryPath) {
+		this.tokensDirectoryPath = tokensDirectoryPath;
+	}
+
+	public String getCredentialsFilePath() {
+		return credentialsFilePath;
+	}
+
+	public void setCredentialsFilePath(String credentialsFilePath) {
+		this.credentialsFilePath = credentialsFilePath;
+	}
 }
