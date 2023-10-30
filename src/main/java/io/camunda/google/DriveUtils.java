@@ -7,8 +7,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.security.GeneralSecurityException;
+import java.util.Collections;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.InputStreamContent;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.drive.Drive;
@@ -54,6 +56,9 @@ public class DriveUtils {
 	}
 
 	public static String storeInDrive(File file) throws IOException {
+		return storeInDrive(file, null);
+	}
+	public static String storeInDrive(File file, String parentId) throws IOException {
 		Drive drive = DriveUtils.drive();
 
 		String mimeType = Files.probeContentType(file.toPath());
@@ -62,11 +67,38 @@ public class DriveUtils {
 		com.google.api.services.drive.model.File fileMetadata = new com.google.api.services.drive.model.File();
 		fileMetadata.setName(file.getName());
 		fileMetadata.setMimeType(mimeType);
+		if (parentId!=null) {
+	    	fileMetadata.setParents(Collections.singletonList(parentId));
+	    }
 
 		InputStreamContent mediaContent = new InputStreamContent(mimeType, new FileInputStream(file));
 		com.google.api.services.drive.model.File driveFile = drive.files().create(fileMetadata, mediaContent)
 		        .setFields("id").execute();
 
 		return driveFile.getId();
+	}
+	
+	public static String createFolder(String folderName) throws IOException {
+		return createFolder(folderName, null);
+	}
+
+	public static String createFolder(String folderName, String parentId) throws IOException {
+		Drive drive = DriveUtils.drive();
+		com.google.api.services.drive.model.File fileMetadata = new com.google.api.services.drive.model.File();
+	    fileMetadata.setName(folderName);
+	    fileMetadata.setMimeType("application/vnd.google-apps.folder");
+	    if (parentId!=null) {
+	    	fileMetadata.setParents(Collections.singletonList(parentId));
+	    }
+	    try {
+	    	com.google.api.services.drive.model.File file = drive.files().create(fileMetadata)
+	          .setFields("id")
+	          .execute();
+	      return file.getId();
+	    } catch (GoogleJsonResponseException e) {
+	      // TODO(developer) - handle error appropriately
+	      System.err.println("Unable to create folder: " + e.getDetails());
+	      throw e;
+	    }
 	}
 }
