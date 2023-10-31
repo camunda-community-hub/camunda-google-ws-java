@@ -160,7 +160,7 @@ public class GmailUtils {
 			}
 			return mail;
 		}
-		if (messagePart.getMimeType().equals("text/html")) {
+		if (messagePart.getMimeType().equals("text/html") || messagePart.getMimeType().equals("text/x-amp-html")) {
 			mail.setBody(new String(messagePart.getBody().decodeData(), StandardCharsets.UTF_8));
 			return mail;
 		}
