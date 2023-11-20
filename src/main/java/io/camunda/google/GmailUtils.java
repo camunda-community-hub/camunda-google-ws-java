@@ -114,11 +114,11 @@ public class GmailUtils {
 	}
 
 	public static void delete(Message m) throws IOException {
-		getService().users().messages().delete("me", m.getId());
+		getService().users().messages().delete("me", m.getId()).execute();
 	}
 
 	public static void trash(Message m) throws IOException {
-		getService().users().messages().trash("me", m.getId());
+		getService().users().messages().trash("me", m.getId()).execute();
 	}
 
 	public static ReceivedMail getContent(Message message) throws IOException {

@@ -76,7 +76,7 @@ You can import it to your maven or gradle project as a dependency
 <dependency>
 	<groupId>io.camunda</groupId>
 	<artifactId>camunda-google-ws-java</artifactId>
-	<version>1.3.5</version>
+	<version>1.3.6</version>
 </dependency>
 ```
 
