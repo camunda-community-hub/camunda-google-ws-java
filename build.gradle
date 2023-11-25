@@ -16,7 +16,7 @@ repositories {
 dependencies {
   api "io.camunda:thymeleaf-feel:1.1.1"
   implementation 'com.sun.mail:jakarta.mail:1.6.7'
-  implementation 'jakarta.activation:jakarta.activation-api:2.0.1'
+  implementation 'jakarta.activation:jakarta.activation-api:2.1.2'
   api "com.google.api-client:google-api-client:1.34.1"
   api "com.google.oauth-client:google-oauth-client-jetty:1.33.3"
   api "com.google.apis:google-api-services-sheets:v4-rev20220411-1.32.1"
